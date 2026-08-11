@@ -1,0 +1,39 @@
+name: Bug report
+description: Report reproducible bridge behavior
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What happened and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction steps
+      placeholder: Provide the smallest reliable sequence.
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: macOS, Node.js, and Codex versions
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Sanitized logs
+      description: Remove tokens, prompts, IDs, paths, and other private data.
+      render: shell
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Secret check
+      options:
+        - label: I removed credentials and private data from this report.
+          required: true

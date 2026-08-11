@@ -1,0 +1,31 @@
+name: Support request
+description: Ask for installation or usage help
+title: "[Support]: "
+labels: [question]
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: What are you trying to do?
+    validations:
+      required: true
+  - type: textarea
+    id: attempted
+    attributes:
+      label: What have you tried?
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: macOS, Node.js, and Codex versions
+    validations:
+      required: true
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Secret check
+      options:
+        - label: I removed credentials and private data from this request.
+          required: true

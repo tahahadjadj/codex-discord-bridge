@@ -229,6 +229,11 @@ accepted Discord messages full local authority. Keep Discord authorization
 restricted with `OWNER_DISCORD_USER_IDS` and review `SECURITY.md` before making
 that change.
 
+The public repository runs tests and ESLint through `.github/workflows/ci.yml`.
+Dependabot checks npm and GitHub Actions dependencies weekly. Public bug and
+support reports require contributors to confirm that credentials and private
+data were removed.
+
 The active-session poller avoids Discord metadata edits in the hot path. Channel
 parent/category maintenance is kept separate from update delivery so rate limits
 or slow channel edits do not block Codex message posting.

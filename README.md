@@ -144,6 +144,7 @@ npx eslint .
 See [docs/architecture.md](docs/architecture.md) for the component model and
 [docs/knowledge-base.md](docs/knowledge-base.md) for detailed runtime behavior.
 Contribution guidelines are in [CONTRIBUTING.md](CONTRIBUTING.md).
+For setup help, see [SUPPORT.md](SUPPORT.md).
 
 ## License
 

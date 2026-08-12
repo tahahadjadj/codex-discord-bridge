@@ -23,7 +23,7 @@ Discord messages back to the matching Codex task.
 ## Requirements
 
 - macOS for the included LaunchAgent deployment scripts
-- Node.js 20 or newer
+- Node.js 20.19.0 or newer
 - A current Codex CLI installation with `codex app-server`
 - A Discord bot and server where you can manage channels
 

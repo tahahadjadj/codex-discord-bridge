@@ -34,6 +34,10 @@ describe("config", () => {
     expect(config.threadSyncBackoffMs).toBe(300000);
     expect(config.completionPingQuietMs).toBe(10000);
     expect(config.channelReorderDebounceMs).toBe(2000);
+    expect(config.logAppServerStderr).toBe(false);
+    expect(config.bridgeLogDir).toContain("logs");
+    expect(config.bridgeLogMaxBytes).toBe(10 * 1024 * 1024);
+    expect(config.bridgeLogCheckIntervalMs).toBe(60 * 60 * 1000);
     expect(config.maxMirroredSessionChannels).toBe(75);
     expect(config.maxGuildChannels).toBe(450);
     expect(config.channelPruneMinAgeHours).toBe(24);
@@ -81,6 +85,10 @@ describe("config", () => {
       CODEX_THREAD_SYNC_BACKOFF_MS: "90000",
       DISCORD_COMPLETION_PING_QUIET_MS: "12000",
       DISCORD_CHANNEL_REORDER_DEBOUNCE_MS: "3500",
+      CODEX_LOG_APP_SERVER_STDERR: "true",
+      BRIDGE_LOG_DIR: "/tmp/bridge-logs",
+      BRIDGE_LOG_MAX_BYTES: "2048",
+      BRIDGE_LOG_CHECK_INTERVAL_MS: "5000",
       DISCORD_ATTACHMENT_DIR: "/tmp/discord-images",
       DISCORD_IMAGE_ATTACHMENT_MAX_COUNT: "2",
       DISCORD_IMAGE_ATTACHMENT_MAX_BYTES: "1024"
@@ -99,6 +107,10 @@ describe("config", () => {
     expect(config.threadSyncBackoffMs).toBe(90000);
     expect(config.completionPingQuietMs).toBe(12000);
     expect(config.channelReorderDebounceMs).toBe(3500);
+    expect(config.logAppServerStderr).toBe(true);
+    expect(config.bridgeLogDir).toBe("/tmp/bridge-logs");
+    expect(config.bridgeLogMaxBytes).toBe(2048);
+    expect(config.bridgeLogCheckIntervalMs).toBe(5000);
     expect(config.attachmentDir).toBe("/tmp/discord-images");
     expect(config.maxImageAttachments).toBe(2);
     expect(config.maxImageAttachmentBytes).toBe(1024);

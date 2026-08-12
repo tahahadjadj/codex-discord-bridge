@@ -6,6 +6,7 @@ const {
   comparePruneCandidates,
   discordChannelActivityTimeMs,
   DiscordCodexBridge,
+  formatAppServerDiagnostic,
   extractAgentMessageText,
   formatImageCount,
   formatSkippedAttachmentMessage,
@@ -57,6 +58,15 @@ describe("discord bridge helpers", () => {
 
   test("truncates long status details", () => {
     expect(truncateStatusDetail("a".repeat(300))).toHaveLength(240);
+  });
+
+  test("bounds and redacts app-server diagnostics", () => {
+    expect(formatAppServerDiagnostic("Authorization: secret-value"))
+      .toBe("Authorization: [REDACTED]");
+    expect(formatAppServerDiagnostic("Authorization: Bearer live-credential"))
+      .toBe("Authorization: [REDACTED]");
+    expect(formatAppServerDiagnostic("a".repeat(20), 5)).toBe("aaaaa...");
+    expect(formatAppServerDiagnostic("   ")).toBe("");
   });
 
   test("formats image forwarding status", () => {

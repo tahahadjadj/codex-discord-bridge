@@ -1298,7 +1298,7 @@ function comparePruneCandidates(a, b, preferredParentId = null) {
 
 function formatAppServerDiagnostic(value, limit = 2000) {
   const text = String(value || "")
-    .replace(/(authorization\s*[:=]\s*)([^\s,;]+)/gi, "$1[REDACTED]")
+    .replace(/(authorization\s*[:=]\s*)[^\r\n,;]+/gi, "$1[REDACTED]")
     .replace(/[A-Za-z0-9_-]{20,}\.[A-Za-z0-9_-]{5,}\.[A-Za-z0-9_-]{20,}/g, "[REDACTED_TOKEN]")
     .trim();
 

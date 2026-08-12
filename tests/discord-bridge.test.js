@@ -63,6 +63,8 @@ describe("discord bridge helpers", () => {
   test("bounds and redacts app-server diagnostics", () => {
     expect(formatAppServerDiagnostic("Authorization: secret-value"))
       .toBe("Authorization: [REDACTED]");
+    expect(formatAppServerDiagnostic("Authorization: Bearer live-credential"))
+      .toBe("Authorization: [REDACTED]");
     expect(formatAppServerDiagnostic("a".repeat(20), 5)).toBe("aaaaa...");
     expect(formatAppServerDiagnostic("   ")).toBe("");
   });

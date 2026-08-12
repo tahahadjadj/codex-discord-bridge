@@ -93,7 +93,7 @@ function loadConfig(env = process.env) {
     logAppServerStderr: parseBoolean(env.CODEX_LOG_APP_SERVER_STDERR, false),
     bridgeLogDir: env.BRIDGE_LOG_DIR || path.join(process.cwd(), "logs"),
     bridgeLogMaxBytes: parsePositiveNumber(env.BRIDGE_LOG_MAX_BYTES, 10 * 1024 * 1024),
-    bridgeLogTrimIntervalMs: parsePositiveNumber(env.BRIDGE_LOG_TRIM_INTERVAL_MS, 60 * 60 * 1000),
+    bridgeLogCheckIntervalMs: parsePositiveNumber(env.BRIDGE_LOG_CHECK_INTERVAL_MS, 60 * 60 * 1000),
     attachmentDir: env.DISCORD_ATTACHMENT_DIR || path.join(process.cwd(), "data", "attachments"),
     maxImageAttachments: parsePositiveNumber(env.DISCORD_IMAGE_ATTACHMENT_MAX_COUNT, 4),
     maxImageAttachmentBytes: parsePositiveNumber(env.DISCORD_IMAGE_ATTACHMENT_MAX_BYTES, 10 * 1024 * 1024),

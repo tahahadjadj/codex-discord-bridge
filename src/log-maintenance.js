@@ -37,22 +37,38 @@ async function trimBridgeLogs(logDir, maxBytes) {
   return results.some(Boolean);
 }
 
-async function startLogMaintenance(config) {
-  const trim = async () => {
+async function bridgeLogsExceedLimit(logDir, maxBytes) {
+  const results = await Promise.all(LOG_FILENAMES.map(async (filename) => {
     try {
-      await trimBridgeLogs(config.bridgeLogDir, config.bridgeLogMaxBytes);
+      const stats = await fs.stat(path.join(logDir, filename));
+      return stats.size > maxBytes;
     } catch (error) {
-      console.error(`Could not trim bridge logs: ${error.message}`);
+      if (error.code === "ENOENT") {
+        return false;
+      }
+      throw error;
     }
-  };
+  }));
+  return results.some(Boolean);
+}
 
-  await trim();
-  const timer = setInterval(trim, config.bridgeLogTrimIntervalMs);
+async function startLogMaintenance(config, onLimitExceeded = () => process.kill(process.pid, "SIGTERM")) {
+  await trimBridgeLogs(config.bridgeLogDir, config.bridgeLogMaxBytes);
+  const timer = setInterval(async () => {
+    try {
+      if (await bridgeLogsExceedLimit(config.bridgeLogDir, config.bridgeLogMaxBytes)) {
+        onLimitExceeded();
+      }
+    } catch (error) {
+      console.error(`Could not check bridge log sizes: ${error.message}`);
+    }
+  }, config.bridgeLogCheckIntervalMs);
   timer.unref();
   return timer;
 }
 
 module.exports = {
+  bridgeLogsExceedLimit,
   startLogMaintenance,
   trimBridgeLogs,
   trimLogFile

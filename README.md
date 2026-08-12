@@ -101,10 +101,12 @@ launchctl kickstart -k "gui/$(id -u)/com.local.codex-discord-bridge"
 tail -f "$HOME/Library/Application Support/CodexDiscordBridge/app/logs/bridge.out.log"
 ```
 
-The bridge keeps each LaunchAgent log at or below 10 MiB by default. Log files
-are trimmed at startup and hourly. Change the limit with
-`BRIDGE_LOG_MAX_BYTES`. Raw `codex app-server` stderr is disabled by default
-because it can be large and may contain sensitive diagnostic context.
+The bridge limits each LaunchAgent log to 10 MiB by default. Log files are
+trimmed at startup. An hourly size check requests a normal LaunchAgent restart
+when a file crosses the limit, allowing descriptors to close before the next
+startup trim. Change the limit with `BRIDGE_LOG_MAX_BYTES`. Raw
+`codex app-server` stderr is disabled by default because it can be large and may
+contain sensitive diagnostic context.
 
 ## Configuration
 

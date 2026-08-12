@@ -179,10 +179,12 @@ The LaunchAgent runs:
 
 Runtime logs are stored in `logs/bridge.out.log` and `logs/bridge.err.log`.
 
-`src/log-maintenance.js` trims both files at startup and every
-`BRIDGE_LOG_TRIM_INTERVAL_MS`, retaining only the newest
-`BRIDGE_LOG_MAX_BYTES` bytes per file. The defaults are one hour and 10 MiB.
-Raw `codex app-server` stderr is not forwarded unless
+`src/log-maintenance.js` trims both files at startup, retaining only the newest
+`BRIDGE_LOG_MAX_BYTES` bytes per file. Every `BRIDGE_LOG_CHECK_INTERVAL_MS`, it
+checks file sizes and requests a normal process restart when either is over the
+limit. LaunchAgent closes and reopens the log descriptors, then the next startup
+performs the trim without racing active writes. The defaults are one hour and
+10 MiB. Raw `codex app-server` stderr is not forwarded unless
 `CODEX_LOG_APP_SERVER_STDERR=true`; when enabled, each diagnostic is redacted
 and truncated before it reaches the LaunchAgent error log. Keep this option off
 outside short supervised debugging sessions.

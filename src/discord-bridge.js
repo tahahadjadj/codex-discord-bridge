@@ -113,7 +113,14 @@ class DiscordCodexBridge {
 
   bindCodexEvents() {
     this.codex.on("stderr", (line) => {
-      process.stderr.write(line);
+      if (!this.config.logAppServerStderr) {
+        return;
+      }
+
+      const diagnostic = formatAppServerDiagnostic(line);
+      if (diagnostic) {
+        process.stderr.write(`[codex app-server] ${diagnostic}\n`);
+      }
     });
 
     this.codex.on("serverError", async (params) => {
@@ -1289,12 +1296,26 @@ function comparePruneCandidates(a, b, preferredParentId = null) {
   return sessionSortTimeMs(a.session) - sessionSortTimeMs(b.session);
 }
 
+function formatAppServerDiagnostic(value, limit = 2000) {
+  const text = String(value || "")
+    .replace(/(authorization\s*[:=]\s*)([^\s,;]+)/gi, "$1[REDACTED]")
+    .replace(/[A-Za-z0-9_-]{20,}\.[A-Za-z0-9_-]{5,}\.[A-Za-z0-9_-]{20,}/g, "[REDACTED_TOKEN]")
+    .trim();
+
+  if (!text) {
+    return "";
+  }
+
+  return text.length > limit ? `${text.slice(0, limit)}...` : text;
+}
+
 module.exports = {
   agentMessageStreamKey,
   compareActivityEntries,
   comparePruneCandidates,
   discordChannelActivityTimeMs,
   DiscordCodexBridge,
+  formatAppServerDiagnostic,
   extractAgentMessageText,
   formatImageCount,
   formatSkippedAttachmentMessage,

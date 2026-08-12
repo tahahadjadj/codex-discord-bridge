@@ -179,6 +179,14 @@ The LaunchAgent runs:
 
 Runtime logs are stored in `logs/bridge.out.log` and `logs/bridge.err.log`.
 
+`src/log-maintenance.js` trims both files at startup and every
+`BRIDGE_LOG_TRIM_INTERVAL_MS`, retaining only the newest
+`BRIDGE_LOG_MAX_BYTES` bytes per file. The defaults are one hour and 10 MiB.
+Raw `codex app-server` stderr is not forwarded unless
+`CODEX_LOG_APP_SERVER_STDERR=true`; when enabled, each diagnostic is redacted
+and truncated before it reaches the LaunchAgent error log. Keep this option off
+outside short supervised debugging sessions.
+
 Use `scripts/install-launch-agent.sh` for first-time installation. It generates
 the LaunchAgent with the current Node executable, deploys the runtime, and
 starts the service. The launch scripts also resolve Node from `PATH` or the

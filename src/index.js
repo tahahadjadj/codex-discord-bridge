@@ -1,15 +1,17 @@
 "use strict";
 
-require("dotenv").config();
+require("dotenv").config({ quiet: true });
 
 const { CodexAppServer } = require("./codex-app-server");
 const { loadConfig, validateConfig } = require("./config");
 const { DiscordCodexBridge } = require("./discord-bridge");
+const { startLogMaintenance } = require("./log-maintenance");
 const { StateStore } = require("./state-store");
 
 async function main() {
   const config = loadConfig();
   validateConfig(config);
+  await startLogMaintenance(config);
 
   const codex = new CodexAppServer({
     command: config.codexCommand,

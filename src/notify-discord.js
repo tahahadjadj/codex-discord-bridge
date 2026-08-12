@@ -1,6 +1,6 @@
 "use strict";
 
-require("dotenv").config();
+require("dotenv").config({ quiet: true });
 
 const { chunkDiscordMessage } = require("./utils");
 const { formatNotifyMessage } = require("./notify-message");

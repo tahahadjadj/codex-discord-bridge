@@ -1,6 +1,6 @@
 "use strict";
 
-require("dotenv").config();
+require("dotenv").config({ quiet: true });
 
 const { CodexAppServer } = require("../src/codex-app-server");
 const { loadConfig, validateConfig } = require("../src/config");

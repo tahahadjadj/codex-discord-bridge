@@ -2,7 +2,7 @@
 
 ## Development
 
-Requires Node.js 20 or newer and a local Codex installation that provides
+Requires Node.js 20.19.0 or newer and a local Codex installation that provides
 `codex app-server`.
 
 ```bash

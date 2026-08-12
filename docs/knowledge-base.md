@@ -238,6 +238,14 @@ The active-session poller avoids Discord metadata edits in the hot path. Channel
 parent/category maintenance is kept separate from update delivery so rate limits
 or slow channel edits do not block Codex message posting.
 
+## Dependency Baseline
+
+The project requires Node.js 20.19.0 or newer. This floor matches ESLint 10's
+supported Node versions and is enforced by `package.json` plus the CI workflow.
+The current dependency baseline uses discord.js 14.27, dotenv 17.4, Jest 30.4,
+ESLint 10.8, and `@eslint/js` 10.0. Dependency upgrades must pass the full test
+suite, ESLint, and `npm audit` before deployment.
+
 The live event path and polling path both suppress the bare
 `Codex turn completed.` marker when assistant output has already been sent. This
 keeps the latest visible bot message as the actual Codex response instead of a
